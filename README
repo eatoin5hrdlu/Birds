@@ -1,0 +1,9 @@
+
+All Software for the Bird Behavior Exhibit:
+
+1) User Web Pages (Ben Schell)
+2) Image Processing Program (Peter Reintjes)
+3) Button Control (Perl script, Peter Reintjes)
+
+This project also uses FWink (binary dist), but
+may eventually use FWink as a compiled-in library.
