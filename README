@@ -12,3 +12,11 @@ Just to see if I can add this in Eclipse ( using Egit )
 I had to clone the repository using https (which won't
 work for push).
 
+No! It does work for PUSH.  Damn it.  SSH works
+and HTTPS doesn't for a Linux Client.  HTTPS works
+and SSH doesn't for a Windows XP Client.  
+I actually think they might both work for Windows 7,
+but I have to go back and check. Sheesh.
+I will push this change via HTTPS (windows xp).
+
+
