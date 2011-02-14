@@ -8,4 +8,7 @@ All Software for the Bird Behavior Exhibit:
 This project also uses FWink (binary dist), but
 may eventually use FWink as a compiled-in library.
 
-Just to see if I can add this in Eclipse (using Egit)
+Just to see if I can add this in Eclipse ( using Egit )
+I had to clone the repository using https (which won't
+work for push).
+
