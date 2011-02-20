@@ -77,8 +77,15 @@ jQuery(function(){
 	}
 
 	var currentCardId = 'start';
+	var animation = null;
+	var nextCard = null;
 	function showCard(cardId){
+		if(animation){
+			nextCard = cardId;
+			return;
+		}
 		if(currentCardId != cardId){
+			animation = true;
 			jQuery('#'+currentCardId).css('z-index', 20).animate({
 				'opacity': 0
 			}, function(){
@@ -86,6 +93,11 @@ jQuery(function(){
 				jQuery(this).css({
 					'z-index': 0
 				});
+				animation = null;
+				if(nextCard){
+					showCard(nextCard);
+					nextCard = null;
+				}
 			});
 			jQuery('#'+cardId).css({
 				'opacity': 1,
@@ -227,18 +239,26 @@ jQuery(function(){
 						for(var i=0; i<5; i++){
 							var txt = __results.print(i*210 + _paddingLeft + 50, 100 + (labelTextSize*1.5)/2, labels[i], __results.getFont(fontName), labelTextSize*1.5).attr({fill: textColor});
 						}
+						// Determine the best radius
+						var max = 0;
+						for(var i=0; i<5; i++){
+							max = (_currentData[i] > max) ? _currentData[i] : max;
+						}
+						var columns = 2;
+						var chartHeight = 600;
+						var r = ((chartHeight / (max/columns)) - 20) / 2;
+						r = (r > 40) ? 40 : r;
+						var spacing = (r*2)+20;
+						
 						// Foreach action
 						for(var i=0; i<5; i++){
 							// Foreach observation in the data for that action
 							for(var j=0; j<_currentData[i]; j++){
 								// Add a dot
 								var x = i*210 + _paddingLeft + 55;
-								if(j%2){
-									x += 100;
-								}
-								var y = 750;
-								y -= Math.floor(j/2)*100;
-								var dot = __results.circle(x, y, 40).attr({fill: '#000'});
+								x += (j%columns)*(200/columns);
+								var y = 750 - Math.floor(j/columns)*spacing;
+								var dot = __results.circle(x, y, r).attr({fill: '#000'});
 							}
 						}
 					}
@@ -357,9 +377,9 @@ jQuery(function(){
 								var bigLabel = __pieChart.print(labelX, labelY, Math.round((this.value.value/_totalObservations)*100)+'% '+pieLabels[this.value.order], __pieChart.getFont(fontName), labelTextSize*1.5).attr({fill: textColor});
 								var bigLabelBBox = bigLabel.getBBox();
 								var bdx = -(bigLabelBBox.width/2);
-								if((((this.x - this.cx)*2)/radius) > 0.70){
+								if((((this.x - this.cx)*2)/radius) > 0.60){
 									bdx = 0;
-								}else if((((this.x - this.cx)*2)/radius) < -0.70){
+								}else if((((this.x - this.cx)*2)/radius) < -0.60){
 									bdx = -bigLabelBBox.width;
 								}
 								var bdy = -(bigLabelBBox.height/2)
@@ -368,9 +388,9 @@ jQuery(function(){
 								var smallLabel = __pieChart.print(labelX, labelY+labelTextSize, this.value.value+' Behavior'+(this.value.value>1?'s':''), __pieChart.getFont(fontName), labelTextSize).attr({fill: textColor});
 								var smallLabelBBox = smallLabel.getBBox();
 								var dx = -(smallLabelBBox.width/2);
-								if((((this.x - this.cx)*2)/radius) > 0.70){
+								if((((this.x - this.cx)*2)/radius) > 0.60){
 									dx = 0;
-								}else if((((this.x - this.cx)*2)/radius) < -0.70){
+								}else if((((this.x - this.cx)*2)/radius) < -0.60){
 									dx = -smallLabelBBox.width;
 								}
 								smallLabel.translate(dx, -(smallLabelBBox.height/2));
@@ -464,6 +484,10 @@ jQuery(function(){
 								var myX = minX+r+(i*bubblePadding);
 								minX += 2*r;
 								var myY = 350;
+								var textPadding = r+10+(labelTextSize*1.5)/2;
+								if(i%2){
+									textPadding *= -1;
+								}
 	
 								circles[i] = {
 									'radius': r,
@@ -473,7 +497,7 @@ jQuery(function(){
 	//									'stroke-opacity': .5,
 										'stroke': item.color
 									}),
-									'text': __bubbleChart.print(myX, myY+r+10+(labelTextSize*1.5)/2, item.label, __results.getFont(fontName), labelTextSize*1.5).attr({
+									'text': __bubbleChart.print(myX, myY+textPadding, item.label, __results.getFont(fontName), labelTextSize*1.5).attr({
 										fill: textColor
 									})
 								};

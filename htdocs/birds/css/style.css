@@ -223,11 +223,9 @@ button {  width: auto; overflow: visible; }
  /* Primary Styles
     Author: 
  */
- /*
 html {
 	overflow: hidden;
 }
-*/
 body {
     background: #FFF;
     color: #000;
