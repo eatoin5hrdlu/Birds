@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
-
+//#define DEBUG 5
 #define DECLARATIONS
 #include "line.h"            /* Global Variables */
 static const char* iview = "C:/cygwin/bin/i_view32.exe";
@@ -202,6 +202,7 @@ int checkObject(int id, int line, int top, int width, int start)
 	    }
 	  else
 	    {
+	      printf("Size wrong %d\n", size);
 	      reason = "wrong area";
 	      /* Small objects are speckles, large objects are errors */
 	      if (size > maxSize)
@@ -216,6 +217,7 @@ int checkObject(int id, int line, int top, int width, int start)
 	}
       else
 	{
+	  printf("wrong height %d\n", height);
 	  reason = "wrong height";
 	  /* Small objects are speckles, large objects are errors */
 	  if (height > maxDim)
@@ -230,6 +232,7 @@ int checkObject(int id, int line, int top, int width, int start)
     }
   else
     {
+      printf("wrong width %d\n", width);
       reason = "wrong width";
       /* Small objects are speckles, large objects are errors */
       if (width > maxDim)
@@ -267,9 +270,9 @@ void initializeGlobals(void)
 
  gid     = 10;  /* Start global object ids at 10 */
  objects = 0;
- minSize = 100;  /* 14-26 worked for one example */
+ minSize = 8;  /* 14-26 worked for one example */
  maxSize = 2000; /* Total area cannot be larger than this */
- minDim  = 8;   /* Add minHeight/Width to further constrain shapes */
+ minDim  = 2;   /* Add minHeight/Width to further constrain shapes */
  maxDim  = 60;   /* Add minHeight/Width to further constrain shapes */
  maxAspect  = 24;  /* Aspect ratio out of this range is suspect */
  gMem = 10;
@@ -428,6 +431,8 @@ int main(int argc, char * argv[])
 	       }
 	   }
 	 addWP(tmp);
+	 printf("%d Objects\n", objects);
+
 
      /* Accumulate Stats for this panel */
 	 for(j=0;j<10;j++) gNoise[j] += gReject[j];
