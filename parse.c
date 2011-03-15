@@ -239,16 +239,22 @@ void checkImageN(int n)
 
       for (j=maxy-1;j>=miny;j--)
 	{
-	  if (j%10) continue;
+	  if (j%2) continue;
 	  unsigned char *line = newgetaline(j,0);
 	  for (i=minx;i<maxx;i++)
 	    {
 	      int d = line[i];
-	      if (i%2) { if ( BLACK(d) ) printf("@"); else printf(" "); }
+	      if (i%2) {
+		if ( BLACK(d) ) printf("@"); else printf(" ");
+	      }
 	    }
 	  printf("|\n%3d %3d |",j-miny, (maxy-j));
 	}
       for (i=minx;i<maxx;i+=2) { printf("_"); } printf("\n");
 }
+
+
+
+
 
 
