@@ -211,12 +211,12 @@ jQuery(function(){
 			case 2:
 				showCard('calculating');
 				// Initialize the spinner (for the calculating page)
-				var r = Raphael('calculating-spinner', 1280, 1024);
-				r.print(385, 800, "Calculating your data...", r.getFont(fontName), 50).attr(txtAttrs);
-				_spinner = spinner(r, 150, 250, 18, 40, activePagerColor);
+//				var r = Raphael('calculating-spinner', 1280, 1024);
+//				r.print(385, 800, "Calculating your data...", r.getFont(fontName), 50).attr(txtAttrs);
+//				_spinner = spinner(r, 150, 250, 18, 40, activePagerColor);
 				var timeout = window.setTimeout(function(){
 					changeState(3);
-				}, calculationDelay*1000);
+				}, calculationDelay*10000);
 				break;
 			case 3:	
 				jQuery.getJSON('vars.js?time='+(new Date()).getTime(), function(data, textStatus, xhr){
